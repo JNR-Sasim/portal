@@ -53,10 +53,3 @@ jobs:
         env:
           SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
 
-
-
-      - name: SSH into Azure VM and restart Apache
-        run: |
-          ssh sasim-it_key azureuser@20.110.89.17 <<EOF
-          sudo systemctl restart apache2
-          EOF
