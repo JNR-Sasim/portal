@@ -20,9 +20,16 @@ jobs:
 
       - name: Copy files via SCP
         run: scp -r * sasim-it_key azureuser@20.110.89.17:/var/www/html/
+        env:
+    SSH_AUTH_SOCK: /tmp/ssh-XXXXXX7Et6fA/agent.1745
 
       - name: SSH into Azure VM and restart Apache
         run: |
           ssh sasim-it_key azureuser@20.110.89.17 <<EOF
           sudo systemctl restart apache2
           EOF
+
+        - name: Add Azure VM to known hosts
+  run: |
+    mkdir -p ~/.ssh
+    ssh-keyscan -H 20.110.89.17 >> ~/.ssh/known_hosts  
