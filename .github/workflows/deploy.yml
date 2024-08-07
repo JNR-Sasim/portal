@@ -23,8 +23,25 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H 20.110.89.17 >> ~/.ssh/known_hosts
 
+      - name: Change ownership and permissions
+        run: |
+          ssh azureuser@20.110.89.17 <<EOF
+          sudo chown -R azureuser:azureuser /var/www/html/
+          sudo chmod -R 755 /var/www/html/
+          EOF
+        env:
+          SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
+
       - name: Copy files via SCP
         run: scp -r * azureuser@20.110.89.17:/var/www/html/
+        env:
+          SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
+
+      - name: Revert ownership to web server user
+        run: |
+          ssh azureuser@20.110.89.17 <<EOF
+          sudo chown -R www-data:www-data /var/www/html/
+          EOF
         env:
           SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
 
@@ -35,6 +52,7 @@ jobs:
           EOF
         env:
           SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
+
 
 
       - name: SSH into Azure VM and restart Apache
