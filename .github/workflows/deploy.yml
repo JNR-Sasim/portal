@@ -18,18 +18,21 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Add Azure VM to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 20.110.89.17 >> ~/.ssh/known_hosts
+
       - name: Copy files via SCP
-        run: scp -r * sasim-it_key azureuser@20.110.89.17:/var/www/html/
+        run: scp -r * azureuser@20.110.89.17:/var/www/html/
         env:
-    SSH_AUTH_SOCK: /tmp/ssh-XXXXXX7Et6fA/agent.1745
+          SSH_AUTH_SOCK: /tmp/ssh-XXXXXX7Et6fA/agent.1745
 
       - name: SSH into Azure VM and restart Apache
         run: |
-          ssh sasim-it_key azureuser@20.110.89.17 <<EOF
+          ssh azureuser@20.110.89.17 <<EOF
           sudo systemctl restart apache2
           EOF
-
-        - name: Add Azure VM to known hosts
-  run: |
-    mkdir -p ~/.ssh
-    ssh-keyscan -H 20.110.89.17 >> ~/.ssh/known_hosts  
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh-XXXXXX7Et6fA/agent.1745
+ 
