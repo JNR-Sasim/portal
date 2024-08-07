@@ -3,7 +3,7 @@ name: Deploy to Azure VM
 on:
   push:
     branches:
-      - main  # or the branch you want to deploy
+      - main
 
 jobs:
   deploy:
@@ -18,8 +18,24 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Add Azure VM to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 20.110.89.17 >> ~/.ssh/known_hosts
+
       - name: Copy files via SCP
-        run: scp -r * sasim-it_key azureuser@20.110.89.17:/var/www/html/
+        run: scp -r * azureuser@20.110.89.17:/var/www/html/
+        env:
+          SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
+
+      - name: SSH into Azure VM and restart Apache
+        run: |
+          ssh azureuser@20.110.89.17 <<EOF
+          sudo systemctl restart apache2
+          EOF
+        env:
+          SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
+
 
       - name: SSH into Azure VM and restart Apache
         run: |
