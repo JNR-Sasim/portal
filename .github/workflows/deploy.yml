@@ -19,10 +19,10 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Copy files via SCP
-        run: scp -r * azureuser@20.110.89.17:/var/www/html/
+        run: scp -r * sasim-it_key azureuser@20.110.89.17:/var/www/html/
 
       - name: SSH into Azure VM and restart Apache
         run: |
-          ssh azureuser@20.110.89.17 <<EOF
+          ssh sasim-it_key azureuser@20.110.89.17 <<EOF
           sudo systemctl restart apache2
           EOF
