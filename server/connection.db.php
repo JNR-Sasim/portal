@@ -12,7 +12,7 @@
     class Connection {
         private $server = "localhost";
         private $username = "root";
-        private $password = "";
+        private $password = "Str0ngP@ssw0rd!";
         private $database = "sasimfup_helpdesk_cms";
 
         public function getConn(){
