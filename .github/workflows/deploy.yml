@@ -26,8 +26,8 @@ jobs:
       - name: Change ownership and permissions
         run: |
           ssh azureuser@ <<EOF20.42.105.173
-          sudo chown -R azureuser:azureuser /var/www/html/
-          sudo chmod -R 755 /var/www/html/
+          sudo chown -R azureuser:azureuser portal
+          sudo chmod -R 755 portal
           EOF
         env:
           SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
@@ -40,7 +40,7 @@ jobs:
       - name: Revert ownership to web server user
         run: |
           ssh azureuser@20.42.105.173 <<EOF
-          sudo chown -R www-data:www-data /var/www/html/
+          sudo chown -R www-data:www-data portal
           EOF
         env:
           SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
