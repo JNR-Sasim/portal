@@ -26,21 +26,21 @@ jobs:
       - name: Change ownership and permissions
         run: |
           ssh azureuser@ <<EOF20.42.105.173
-          sudo chown -R azureuser:azureuser portal
+          sudo chown -R azureuser:azureuser /var/www/html/portal
           sudo chmod -R 755 portal
           EOF
         env:
           SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
 
       - name: Copy files via SCP
-        run: scp -r * azureuser@:20.42.105.173/var/www/html/
+        run: scp -r * azureuser@:20.42.105.173 /var/www/html/portal
         env:
           SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
 
       - name: Revert ownership to web server user
         run: |
           ssh azureuser@20.42.105.173 <<EOF
-          sudo chown -R www-data:www-data portal
+          sudo chown -R www-data:www-data /var/www/html/portal
           EOF
         env:
           SSH_AUTH_SOCK: ${{ env.SSH_AUTH_SOCK }}
