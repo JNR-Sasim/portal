@@ -1,5 +1,6 @@
 <?php
 date_default_timezone_set('Africa/Johannesburg');
+
 if (!isset($_SESSION)) { 
     session_start(); 
 } 
@@ -40,12 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ");
 
             if ($stmt) {
-                // Hash the password
+                // Hash the password using MD5
                 $password = $_POST['password'];
                 if (empty($password)) {
                     $errors[] = "Password cannot be empty";
                 } else {
-                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                    $hashed_password = md5($password);
                 }
 
                 // Set parameters
@@ -99,4 +100,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 ?>
-
