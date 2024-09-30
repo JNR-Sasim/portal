@@ -54,7 +54,7 @@
       </div>
       <div class="location">
         <span><i class="ri-map-pin-2-fill"></i></span>
-        2 Fife St, Buccleuch, Sandton, 2066
+         Block B, Woodmead North Office Park, <br> 54 Maxwell Dr, Waterfall City,<br> 2191
       </div>
     </div>
     <script src="https://unpkg.com/scrollreveal"></script>
