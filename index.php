@@ -54,7 +54,7 @@
       </div>
       <div class="location">
         <span><i class="ri-map-pin-2-fill"></i></span>
-         Block B, Woodmead North Office Park, <br> 54 Maxwell Dr, Waterfall City,<br> 2191
+         Block B, Woodmead North Office Park, <br> 54 Maxwell Dr, Waterfall City,<br> 2190
       
       </div>
     </div>
